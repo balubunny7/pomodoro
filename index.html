@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXUS - Focus Beyond Limits</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>WELCOME TO NEXUS</h1>
+
+    <p>Focus Beyond Limits.</p>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naturals - Student Focus & Study App</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Timer Styles */
+    .timer-display {
+      font-size: 4rem;
+      font-weight: bold;
+      margin: 20px 0;
+      letter-spacing: 2px;
+      color: var(--text-main);
+    }
+
+    .mode-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .btn-mode {
+      background: transparent;
+      border: 1px solid var(--text-muted);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+
+    .btn-mode.active, .btn-mode:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .btn-main {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-main:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Notes & Document Generator */
+    .doc-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .doc-section h2 {
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: var(--text-main);
+      padding: 10px;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    /* Ambient Sound Controls */
+    .sound-controls {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .sound-controls label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: var(--text-main);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Naturals</h1>
+    <p>Distraction-Free Student Pomodoro & Study Material Generator</p>
+  </header>
+
+  <div class="container">
+    <!-- Timer Section -->
+    <div class="card">
+      <div class="mode-selector">
+        <button class="btn-mode active" onclick="setMode('focus')">Focus (25m)</button>
+        <button class="btn-mode" onclick="setMode('shortBreak')">Short Break (5m)</button>
+        <button class="btn-mode" onclick="setMode('longBreak')">Long Break (15m)</button>
+      </div>
+
+      <div class="timer-display" id="timer">25:00</div>
+
+      <div class="controls">
+        <button class="btn-main" id="startBtn" onclick="toggleTimer()">Start Focus</button>
+        <button class="btn-secondary" onclick="resetTimer()">Reset</button>
+      </div>
+
+      <div class="sound-controls">
+        <label for="ambientSound">Ambient Nature Sound</label>
+        <select id="ambientSound" onchange="changeSound(this.value)">
+          <option value="none">None</option>
+          <option value="rain">Soft Rain</option>
+          <option value="forest">Forest Birds</option>
+          <option value="waves">Ocean Waves</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Notes & Document Generator Section -->
+    <div class="card doc-section">
+      <h2>Session Notes & Document Exporter</h2>
+      <input type="text" id="docTitle" placeholder="Document Title (e.g., Biology Chapter 4)" />
+      <textarea id="docContent" placeholder="Write down key points, takeaways, or concepts while studying..."></textarea>
+      <button class="btn-main" onclick="exportDocument()">Export Study Note (.txt)</button>
+    </div>
+  </div>
+
+  <script>
+    // Timer Logic
+    let timerDuration = 25 * 60;
+    let timeLeft = timerDuration;
+    let timerInterval = null;
+    let isRunning = false;
+
+    const timerDisplay = document.getElementById('timer');
+    const startBtn = document.getElementById('startBtn');
+
+    function updateDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    function setMode(mode) {
+      clearInterval(timerInterval);
+      isRunning = false;
+      startBtn.textContent = 'Start Focus';
+
+      document.querySelectorAll('.btn-mode').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (mode === 'focus') timerDuration = 25 * 60;
+      else if (mode === 'shortBreak') timerDuration = 5 * 60;
+      else if (mode === 'longBreak') timerDuration = 15 * 60;
+
+      timeLeft = timerDuration;
+      updateDisplay();
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        clearInterval(timerInterval);
+        isRunning = false;
+        startBtn.textContent = 'Resume';
+      } else {
+        isRunning = true;
+        startBtn.textContent = 'Pause';
+        timerInterval = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            alert('Session complete! Take a break.');
+            startBtn.textContent = 'Start Focus';
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      timeLeft = timerDuration;
+      startBtn.textContent = 'Start Focus';
+      updateDisplay();
+    }
+
+    // Sound Synthesizer (Web Audio API)
+    let audioCtx, noiseNode;
+
+    function changeSound(type) {
+      if (audioCtx) audioCtx.close();
+      if (type === 'none') return;
+
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const bufferSize = audioCtx.sampleRate * 2;
+      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = audioCtx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+      whiteNoise.loop = true;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(type === 'rain' ? 800 : type === 'waves' ? 400 : 1200, audioCtx.currentTime);
+
+      whiteNoise.connect(filter);
+      filter.connect(audioCtx.destination);
+      whiteNoise.start();
+    }
+
+    // Document Exporter
+    function exportDocument() {
+      const title = document.getElementById('docTitle').value.trim() || 'Naturals_Study_Notes';
+      const content = document.getElementById('docContent').value;
+
+      if (!content) {
+        alert('Please add some content to export.');
+        return;
+      }
+
+      const blob = new Blob([`Title: ${title}\nDate: ${new Date().toLocaleDateString()}\n\n---\n\n${content}`], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${title.replace(/\s+/g, '_')}.txt`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
